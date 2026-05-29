@@ -41,8 +41,8 @@
     kernelPackages = pkgs.linuxPackages_zen;
     supportedFilesystems = [ "bcachefs" ];
     kernelParams = [
-      "i915.force_probe=!*"
-      "xe.force_probe=*"
+      "i915.force_probe=!7d67"
+      "xe.force_probe=7d67"
     ];
     kernel.sysctl = {
       "vm.page-cluster" = 0;
