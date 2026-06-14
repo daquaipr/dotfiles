@@ -73,14 +73,24 @@
   hardware = {
     graphics = {
       enable = true;
+      enable32Bit = true;
     };
     cpu.intel = {
       updateMicrocode = true;
     };
     nvidia = {
+      package = config.boot.kernelPackages.nvidiaPackages.beta;
       open = true;
       modesetting = {
         enable = true;
+      };
+      prime = {
+        intelBusId = "PCI:0@0:2:0";
+	nvidiaBusId = "PCI:1@0:0:0";
+        offload = {
+          enable = true;
+	  enableOffloadCmd = true;
+        };
       };
       nvidiaSettings = false;
       powerManagement = {
