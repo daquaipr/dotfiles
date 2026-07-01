@@ -38,7 +38,7 @@
   ];
 
   boot = {
-    kernelPackages = pkgs.linuxPackages_zen;
+    kernelPackages = pkgs.linuxPackages;
     supportedFilesystems = [ "bcachefs" ];
     kernelParams = [
       "i915.force_probe=!7d67"
