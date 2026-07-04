@@ -38,7 +38,7 @@
   ];
 
   boot = {
-    kernelPackages = pkgs.linuxPackages;
+    kernelPackages = pkgs.linuxPackages_zen;
     supportedFilesystems = [ "bcachefs" ];
     kernelParams = [
       "i915.force_probe=!7d67"
@@ -79,7 +79,7 @@
       updateMicrocode = true;
     };
     nvidia = {
-      package = config.boot.kernelPackages.nvidiaPackages.beta;
+      package = config.boot.kernelPackages.nvidiaPackages.latest;
       open = true;
       modesetting = {
         enable = true;
