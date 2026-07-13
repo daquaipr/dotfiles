@@ -95,6 +95,7 @@
       nvidiaSettings = false;
       powerManagement = {
         enable = true;
+	finegrained = true;
       };
     };
   };
@@ -104,6 +105,25 @@
       autoScrub = {
         enable = true;
       };
+    };
+    tlp = {
+      enable = true;
+      pd = {
+        enable = true;
+	};
+      settings = {
+        START_CHARGE_THRESH_BAT1 = 70;
+	STOP_CHARGE_THRESH_BAT1 = 80;
+	CPU_BOOST_ON_AC = 0;
+	CPU_BOOST_ON_BAT = 0;
+	PLATFORM_PROFILE_ON_AC = "quiet";
+	PLATFORM_PROFILE_ON_BAT = "quiet";
+	CPU_SCALING_GOVERNOR_ON_AC = "powersave";
+	CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
+      };
+    };
+    thermald = {
+      enable = true;
     };
     flatpak = {
       enable = true;
@@ -143,6 +163,15 @@
       };
       nvidia-resume = {
         enable = true;
+      };
+      intel-powercap = {
+        description = "Limit system power";
+	wantedBy = [ "multi-user.target" ];
+	after = [ "multi-user.target" "tlp.service" ];
+	serviceConfig = {
+	  Type = "oneshot";
+	  ExecStart = "${pkgs.powercap}/bin/powercap-set intel-rapl -z 0 -c 0 -l 65000000";
+	};
       };
     };
   };
@@ -221,6 +250,7 @@
     waybar
     xwayland-satellite
     brightnessctl
+    powercap
   ];
 
   fonts = {
