@@ -112,8 +112,6 @@
         enable = true;
 	};
       settings = {
-        START_CHARGE_THRESH_BAT1 = 70;
-	STOP_CHARGE_THRESH_BAT1 = 80;
 	CPU_BOOST_ON_AC = 0;
 	CPU_BOOST_ON_BAT = 0;
 	PLATFORM_PROFILE_ON_AC = "quiet";
@@ -221,9 +219,8 @@
 
   i18n.defaultLocale = "en_US.UTF-8";
   console = {
-    earlySetup = true;
-    font = "ter-v32n";
-    packages = with pkgs; [ terminus_font ];
+    earlySetup = true; 
+    font = "nerd-fonts.jetbrains-mono";
   };
 
   users = {
