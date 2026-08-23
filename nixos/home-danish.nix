@@ -37,6 +37,9 @@
           email = "193341369+daquaipr@users.noreply.github.com";
 	};
       };
+    }; 
+    vscode = {
+      enable = true;
     };
   };
 
