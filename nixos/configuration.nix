@@ -85,8 +85,8 @@
         enable = true;
       };
       prime = {
-        intelBusId = "PCI:0@0:2:0";
-	nvidiaBusId = "PCI:1@0:0:0";
+        intelBusId = "PCI:0:2:0";
+	nvidiaBusId = "PCI:1:0:0";
         offload = {
           enable = true;
 	  enableOffloadCmd = true;
@@ -162,15 +162,6 @@
       nvidia-resume = {
         enable = true;
       };
-      intel-powercap = {
-        description = "Limit system power";
-	wantedBy = [ "multi-user.target" ];
-	after = [ "multi-user.target" "tlp.service" ];
-	serviceConfig = {
-	  Type = "oneshot";
-	  ExecStart = "${pkgs.powercap}/bin/powercap-set intel-rapl -z 0 -c 0 -l 65000000";
-	};
-      };
     };
   };
 
@@ -183,9 +174,6 @@
     };
     nano = {
       enable = false;
-    };
-    git = {
-      enable = true;
     };
     steam = {
       enable = true;
