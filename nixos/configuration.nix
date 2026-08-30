@@ -9,6 +9,7 @@
 {
   imports = [
     ./hardware-configuration.nix
+    inputs.chaotic.nixosModules.default
   ];
 
   nixpkgs = {
@@ -26,8 +27,6 @@
         "nix-command"
         "flakes"
       ];
-      max-jobs = "auto";
-      http-connections = 128;
       use-xdg-base-directories = true;
     };
   };
@@ -58,9 +57,6 @@
       };
     };
     initrd = {
-      systemd = {
-        enable = true;
-      };
       compressor = "zstd";
       compressorArgs = [
         "-19"
@@ -112,16 +108,16 @@
         enable = true;
 	};
       settings = {
-	CPU_BOOST_ON_AC = 0;
+        TL_PROFILE_DEFAULT = "SAV";
+	START_CHARGE_THRESH_BAT1 = "75";
+	STOP_CHARGE_THRESH_BAT1 = "80";
+	CPU_BOOST_ON_AC = 1;
 	CPU_BOOST_ON_BAT = 0;
-	PLATFORM_PROFILE_ON_AC = "quiet";
-	PLATFORM_PROFILE_ON_BAT = "quiet";
-	CPU_SCALING_GOVERNOR_ON_AC = "powersave";
+	PLATFORM_PROFILE_ON_AC = "performance";
+	PLATFORM_PROFILE_ON_BAT = "low-power";
+	CPU_SCALING_GOVERNOR_ON_AC = "performance";
 	CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
       };
-    };
-    thermald = {
-      enable = true;
     };
     flatpak = {
       enable = true;
@@ -146,22 +142,14 @@
     ntpd-rs = { 
       enable = true;
     };
+    scx = {
+      enable = true;
+    };
   };
 
   systemd = {
     oomd = {
       enable = true;
-    };
-    services = {
-      nvidia-suspend = {
-        enable = true;
-      };
-      nvidia-hibernate = {
-        enable = true;
-      };
-      nvidia-resume = {
-        enable = true;
-      };
     };
   };
 
@@ -208,7 +196,6 @@
   i18n.defaultLocale = "en_US.UTF-8";
   console = {
     earlySetup = true; 
-    font = "nerd-fonts.jetbrains-mono";
   };
 
   users = {
@@ -228,6 +215,9 @@
     sudo-rs = {
       enable = true;
     };
+    rtkit = {
+      enable = true;
+    };
   };
 
   environment.systemPackages = with pkgs; [
@@ -235,7 +225,6 @@
     waybar
     xwayland-satellite
     brightnessctl
-    powercap
   ];
 
   fonts = {
