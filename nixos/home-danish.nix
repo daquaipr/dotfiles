@@ -13,6 +13,10 @@
       inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
       pkgs.zellij
       pkgs.ghostty
+      pkgs.waybar
+      pkgs.mangohud
+      pkgs.heroic
+      pkgs.xwayland-satellite
     ];
   };
 

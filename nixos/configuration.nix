@@ -39,14 +39,6 @@
   boot = {
     kernelPackages = pkgs.linuxPackages_zen;
     supportedFilesystems = [ "bcachefs" ];
-    kernelParams = [
-      "i915.force_probe=!7d67"
-      "xe.force_probe=7d67"
-    ];
-    kernel.sysctl = {
-      "vm.page-cluster" = 0;
-      "vm.swappiness" = 100;
-    };
     loader = {
       systemd-boot = {
         enable = true;
@@ -108,15 +100,25 @@
         enable = true;
 	};
       settings = {
-        TL_PROFILE_DEFAULT = "SAV";
-	START_CHARGE_THRESH_BAT1 = "75";
-	STOP_CHARGE_THRESH_BAT1 = "80";
-	CPU_BOOST_ON_AC = 1;
-	CPU_BOOST_ON_BAT = 0;
-	PLATFORM_PROFILE_ON_AC = "performance";
-	PLATFORM_PROFILE_ON_BAT = "low-power";
+        TLP_PROFILE_DEFAULT = "SAV";
+        TLP_PROFILE_AC = "PRF";
+        TLP_PROFILE_BAT = "SAV";
+        CPU_ENERGY_PERF_POLICY_ON_BAT = "power";
+	CPU_ENERGY_PERF_POLICY_ON_AC= "performance";
+	CPU_BOOST_ON_BAT= "0";
+        CPU_BOOST_ON_SAV= "0";
 	CPU_SCALING_GOVERNOR_ON_AC = "performance";
 	CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
+	CPU_HWP_DYN_BOOST_ON_BAT= "0";
+        CPU_HWP_DYN_BOOST_ON_SAV= "0";	
+	PLATFORM_PROFILE_ON_BAT = "low-power";
+	PLATFORM_PROFILE_ON_AC= "performance";
+	RUNTIME_PM_ON_AC= "auto";
+	START_CHARGE_THRESH_BAT1 = "75";
+	STOP_CHARGE_THRESH_BAT1 = "80";
+	INTEL_GPU_POWER_PROFILE_ON_AC = "base";
+	INTEL_GPU_POWER_PROFILE_ON_BAT = "power_saving";
+	INTEL_GPU_POWER_PROFILE_ON_SAV = "power_saving";
       };
     };
     flatpak = {
@@ -171,11 +173,13 @@
         proton-ge-bin
       ];
     };
+    gamescope = {
+      enable = true;
+    };
   };
 
   zramSwap = {
     enable = true;
-    algorithm = "zstd";
   };
 
   networking = {
@@ -194,6 +198,7 @@
   time.timeZone = "Asia/Jakarta";
 
   i18n.defaultLocale = "en_US.UTF-8";
+
   console = {
     earlySetup = true; 
   };
@@ -222,7 +227,6 @@
 
   environment.systemPackages = with pkgs; [
     neovim
-    waybar
     xwayland-satellite
     brightnessctl
   ];
