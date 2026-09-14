@@ -82,7 +82,7 @@
       };
       nvidiaSettings = false;
       powerManagement = {
-        enable = true;
+       enable = true;
 	finegrained = true;
       };
     };
@@ -229,6 +229,7 @@
     neovim
     xwayland-satellite
     brightnessctl
+    arduino-ide
   ];
 
   fonts = {
