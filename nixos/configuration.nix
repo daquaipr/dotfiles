@@ -229,7 +229,6 @@
     neovim
     xwayland-satellite
     brightnessctl
-    arduino-ide
   ];
 
   fonts = {
